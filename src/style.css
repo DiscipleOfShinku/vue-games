@@ -47,6 +47,11 @@
   font-size: 400%;
 }
 
+.chip-pool-move
+{
+  transition: transform 0.25s;
+}
+
 
 #info-panel
 {

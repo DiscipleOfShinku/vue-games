@@ -1,13 +1,14 @@
 <template>
     <div id="game-table">
-      <div id="deck">
+      <transition-group name="chip-pool" tag="div" id="deck">
         <div v-for="(chip, number) in chips"
             v-if="number !== 0" class="chip"
+            v-bind:key="number"
             :style="'top: ' + (chip.row * 110 + 10) + 'px; left: ' + (chip.column * 110 + 10) + 'px;'"
             @click="tryToMove(number, chip.row, chip.column)">
           <p class="div-center  chip-number">{{ number }}</p>
         </div>
-      </div>
+      </transition-group>
       <div id="info-panel">
         <div id="reset-deck" class="info-panel-element"
             @click="resetDeck">
