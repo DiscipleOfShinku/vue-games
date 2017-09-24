@@ -1,22 +1,4 @@
-#deck
-{
-  position: relative;
-  width: 450px;
-  height: 450px;
-  background-color: #cbcac2;
-  border-radius: 5px;
-  border: 2px solid #6b5107;
-}
-.chip
-{
-  position: absolute;
-  width: 100px;
-  height: 100px;
-  background-color: #6b5107;
-  border-radius: 5px;
-}
-
-.chip-number
+.div-center
 {
   margin: 0;
   position: relative;
@@ -24,6 +6,90 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  
+  -webkit-user-select: none; /* Safari */        
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+/Edge */
+  user-select: none; /* Standard */
+}
+
+
+#game-table
+{
+  
+}
+
+#deck
+{
+  position: relative;
+  left: 50%;
+  transform: translate(-50%, 0);
+  width: 450px;
+  height: 450px;
+  background-color: #cbcac2;
+  border-radius: 5px;
+  border: 2px solid #6b5107;
+}
+
+.chip
+{
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  background-color: #6b5107;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.chip-number
+{
   color: #cbcac2;
   font-size: 400%;
+}
+
+
+#info-panel
+{
+  position: relative;
+  left: 50%;
+  transform: translate(-50%, 0);
+  width: 450px;
+  height: 200px;
+  background-color: #cbcac2;
+  border-radius: 5px;
+  border: 2px solid #6b5107;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.info-panel-element
+{
+  width: 150px;
+  height: 100px;
+  border-radius: 5px;
+}
+
+#reset-deck
+{
+  background-color: #4b4b90;
+  cursor: pointer;
+}
+
+#victory-card
+{
+  background-color: #308130;
+}
+
+#reset-deck p
+{
+  color: #fff;
+  font-size: 150%;
+}
+
+#victory-card p
+{
+  color: #fff;
+  font-size: 150%;
 }

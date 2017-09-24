@@ -1,10 +1,21 @@
 <template>
-    <div id="deck">
-      <div v-for="(chip, number) in chips"
-          v-if="number !== 0" class="chip"
-          :style="'top: ' + (chip.row * 110 + 10) + 'px; left: ' + (chip.column * 110 + 10) + 'px;'"
-          @click="tryToMove(number, chip.row, chip.column)">
-        <p class="chip-number">{{ number }}</p>
+    <div id="game-table">
+      <div id="deck">
+        <div v-for="(chip, number) in chips"
+            v-if="number !== 0" class="chip"
+            :style="'top: ' + (chip.row * 110 + 10) + 'px; left: ' + (chip.column * 110 + 10) + 'px;'"
+            @click="tryToMove(number, chip.row, chip.column)">
+          <p class="div-center  chip-number">{{ number }}</p>
+        </div>
+      </div>
+      <div id="info-panel">
+        <div id="reset-deck" class="info-panel-element"
+            @click="resetDeck">
+          <p class="div-center">RESET</p>
+        </div>
+        <div v-if="victory" id="victory-card" class="info-panel-element">
+          <p class="div-center">VICTORY!</p>
+        </div>
       </div>
     </div>
 </template>
@@ -20,6 +31,7 @@ export default
       volume: 0,
       deck: [],
       chips: [],
+      victory: false,
     }
   },
   methods:
@@ -81,6 +93,21 @@ export default
         this.deck[row][column] = 0;
         this.$set(this.chips[number], 'column', column - 1);
       }
+      this.checkVictory();
+    },
+    checkVictory()
+    {
+      var victory = true;
+      for (let i = 0; i < this.size; i++)
+        for (let j = 0; j < this.size; j++)
+          if(this.deck[i][j] !== i * 4 + j + 1 && i + j + 2 !== this.size * 2)
+            victory = false;
+      
+      this.$set(this, 'victory', victory);     
+    },
+    resetDeck()
+    {
+      this.prepareShuffledDeck();
     },
   },
   mounted()
