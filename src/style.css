@@ -1,0 +1,29 @@
+#deck
+{
+  position: relative;
+  width: 450px;
+  height: 450px;
+  background-color: #cbcac2;
+  border-radius: 5px;
+  border: 2px solid #6b5107;
+}
+.chip
+{
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  background-color: #6b5107;
+  border-radius: 5px;
+}
+
+.chip-number
+{
+  margin: 0;
+  position: relative;
+  float: left;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #cbcac2;
+  font-size: 400%;
+}
