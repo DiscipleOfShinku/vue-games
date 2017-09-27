@@ -68,32 +68,41 @@ export default
       }
       this.$set(this, 'chips', chips);
     },
-    tryToMove(number, row, column)
+    moveLeft(number, row, column)
     {
-      if (row > 0 && this.deck[row - 1][column] === 0)
-      {
-        this.deck[row - 1][column] = number;
-        this.deck[row][column] = 0;
-        this.$set(this.chips[number], 'row', row - 1);
-        
-      } else if (column < this.size - 1 && this.deck[row][column + 1] === 0)
-      {
-        this.deck[row][column + 1] = number;
-        this.deck[row][column] = 0;
-        this.$set(this.chips[number], 'column', column + 1);
-        
-      } else if (row < this.size - 1 && this.deck[row + 1][column] === 0)
-      {
-        this.deck[row + 1][column] = number;
-        this.deck[row][column] = 0;
-        this.$set(this.chips[number], 'row', row + 1);
-        
-      } else if (column > 0 && this.deck[row][column - 1] === 0)
-      {
         this.deck[row][column - 1] = number;
         this.deck[row][column] = 0;
         this.$set(this.chips[number], 'column', column - 1);
-      }
+    },
+    moveRight(number, row, column)
+    {
+        this.deck[row][column + 1] = number;
+        this.deck[row][column] = 0;
+        this.$set(this.chips[number], 'column', column + 1);
+    },
+    moveUp(number, row, column)
+    {
+        this.deck[row - 1][column] = number;
+        this.deck[row][column] = 0;
+        this.$set(this.chips[number], 'row', row - 1);
+    },
+    moveDown(number, row, column)
+    {
+        this.deck[row + 1][column] = number;
+        this.deck[row][column] = 0;
+        this.$set(this.chips[number], 'row', row + 1);
+    },
+    tryToMove(number, row, column)
+    {
+      if (row > 0 && this.deck[row - 1][column] === 0)
+        this.moveUp(number, row, column);
+      else if (column < this.size - 1 && this.deck[row][column + 1] === 0)
+        this.moveRight(number, row, column);
+      else if (row < this.size - 1 && this.deck[row + 1][column] === 0)
+        this.moveDown(number, row, column);
+      else if (column > 0 && this.deck[row][column - 1] === 0)
+        this.moveLeft(number, row, column);
+      
       this.checkVictory();
     },
     checkVictory()
@@ -110,11 +119,46 @@ export default
     {
       this.prepareShuffledDeck();
     },
+    findHolePosition()
+    {
+      const position = {};
+      for (let i = 0; i < this.size; i++)
+        for (let j = 0; j < this.size; j++)
+          if (this.deck[i][j] === 0)
+          {
+            position['row'] = i;
+            position['column'] = j;
+          }
+          
+      return position;
+    },
+    processKeyup(e)
+    {
+      const holePosition = this.findHolePosition();
+      const i = holePosition.row;
+      const j = holePosition.column;
+      
+      if (e.keyCode === 82) // 'r' key
+        this.resetDeck();
+      else if (e.keyCode === 37 && j < this.size - 1) // 'left' key
+        this.moveLeft(this.deck[i][j + 1], i, j + 1);
+      else if (e.keyCode === 38 && i < this.size - 1) // 'up' key
+        this.moveUp(this.deck[i + 1][j], i + 1, j);
+      else if (e.keyCode === 39 && j > 0) // 'right' key
+        this.moveRight(this.deck[i][j - 1], i, j - 1);
+      else if (e.keyCode === 40 && i > 0) // 'down' key
+        this.moveDown(this.deck[i - 1][j], i - 1, j);
+    },
   },
   mounted()
   {
     this.$set(this, 'volume', this.size * this.size);
     this.prepareShuffledDeck();
+    window.addEventListener('keyup', this.processKeyup);
+  },
+  beforeDestroy()
+  {
+    window.removeEventListener('keyup', this.processKeyup);
   },
 }
 </script>
