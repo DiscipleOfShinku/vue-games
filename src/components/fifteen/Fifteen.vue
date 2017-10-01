@@ -138,15 +138,15 @@ export default
       const i = holePosition.row;
       const j = holePosition.column;
       
-      if (e.keyCode === 82) // 'r' key
+      if (e.key === 'r')
         this.resetDeck();
-      else if (e.keyCode === 37 && j < this.size - 1) // 'left' key
+      else if (e.key === 'ArrowLeft' && j < this.size - 1)
         this.moveLeft(this.deck[i][j + 1], i, j + 1);
-      else if (e.keyCode === 38 && i < this.size - 1) // 'up' key
+      else if (e.key === 'ArrowUp' && i < this.size - 1)
         this.moveUp(this.deck[i + 1][j], i + 1, j);
-      else if (e.keyCode === 39 && j > 0) // 'right' key
+      else if (e.key === 'ArrowRight' && j > 0)
         this.moveRight(this.deck[i][j - 1], i, j - 1);
-      else if (e.keyCode === 40 && i > 0) // 'down' key
+      else if (e.key === 'ArrowDown' && i > 0)
         this.moveDown(this.deck[i - 1][j], i - 1, j);
     },
   },
