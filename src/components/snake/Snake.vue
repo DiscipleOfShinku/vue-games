@@ -1,0 +1,187 @@
+<template>
+    <div id="game-table">
+      <transition-group name="snake-area" tag="div" id="snake-area">
+        <div v-for="(row, x) in field"
+            v-bind:key="x">
+          <div v-for="(tile, y) in row"
+              class="tile" v-bind:class="[tile.content]"
+              :style="'left: ' + (x * 10) + 'px; top: ' + (y * 10) + 'px;'" >
+          </div>
+        </div>
+        <div v-for="(part, index) in snake"
+            class="snake-part"
+            v-bind:key="index"
+            :style="'left: ' + (part.x * 10) + 'px; top: ' + (part.y * 10) + 'px;'" >
+        </div>
+      </transition-group>
+      <div id="info-panel">
+        <div id="reset-game" class="info-panel-element"
+            @click="resetGame">
+          <p class="div-center">RESET</p>
+        </div>
+        <div v-if="isAlive" id="victory-card" class="info-panel-element">
+          <p class="div-center">Eat apples!</p>
+        </div>
+        <div v-else id="defeat-card" class="info-panel-element">
+          <p class="div-center">AWWWWW!</p>
+        </div>
+      </div>
+    </div>
+</template>
+
+<script>
+export default
+{
+  name: 'snake',
+  data()
+  {
+    return {
+      fieldWidth: 45,
+      fieldHeight: 25,
+      field: [],
+      snakeInitialLength: 3,
+      snake: [],
+      turnTime: 250, // in ms
+      direction: 'right',
+      plannedDirection: 'right',
+      isAlive: true,
+      intervalID: null,
+    }
+  },
+  methods:
+  {
+    initField()
+    {
+      const arr = [];
+      for (let i = 0; i < this.fieldWidth; i++)
+      {
+        arr[i] = [];
+        for (let j = 0; j < this.fieldHeight; j++)
+        {
+        if (     i === 0 || i === this.fieldWidth - 1
+              || j === 0 || j === this.fieldHeight - 1)
+            arr[i][j] = { 'content': 'wall' };
+          else
+            arr[i][j] = { 'content': 'grass' };
+        }
+      }
+      this.$set(this, 'field', arr);
+    },
+    initSnake()
+    {
+      const arr = [];
+      for (let i = 0; i < this.snakeInitialLength; i++)
+      {
+        arr[i] = { 'x': -1, 'y': -1 };
+      }
+      this.$set(this, 'snake', arr);
+    },
+    putSnakeOnField()
+    {
+      const headX = Math.ceil(this.fieldWidth / 2);
+      const headY = Math.ceil(this.fieldHeight / 2);
+      for (let i = 0; i < this.snakeInitialLength; i++)
+      {
+        this.$set(this.snake[i], 'x', headX - i); 
+        this.$set(this.snake[i], 'y', headY); 
+        this.$set(this.field[headX - i][headY], 'content', 'snake');
+      }
+    },
+    resetGame()
+    {
+      if (this.intervalID)
+        this.stopGame();
+      
+      this.initField();
+      this.initSnake();
+      this.putSnakeOnField();
+      this.$set(this, 'isAlive', true);
+      this.$set(this, 'direction', 'right');
+      this.$set(this, 'plannedDirection', 'right');
+      
+      var intervalID = window.setInterval(this.tryToMoveSnake, this.turnTime);
+      this.$set(this, 'intervalID', intervalID);
+    },
+    stopGame()
+    {
+      window.clearInterval(this.intervalID);
+      this.$set(this, 'intervalID', null);
+    },
+    initGame()
+    {
+      this.resetGame();
+    },
+    tryToMoveSnake()
+    {
+      this.$set(this, 'direction', this.plannedDirection);
+      var targetX = this.snake[0].x;
+      var targetY = this.snake[0].y;
+      switch (this.direction)
+      {
+        case 'up':
+          targetY--;
+          break;
+        case 'right':
+          targetX++;
+          break;
+        case 'down':
+          targetY++;
+          break;
+        case 'left':
+          targetX--;
+          break;
+        default:
+          throw new Error('Wrong direction value');
+      }
+      if (   this.field[targetX][targetY].content === 'wall'
+          || this.field[targetX][targetY].content === 'snake')
+      {
+        this.stopGame();
+        this.$set(this, 'isAlive', false);
+        
+      } else
+        this.moveSnake(targetX, targetY);
+    },
+    moveSnake(targetX, targetY)
+    {
+      var nextX = targetX;
+      var nextY = targetY;
+      for (let i = 0; i < this.snakeInitialLength; i++)
+      {
+        var currentX = this.snake[i].x;
+        var currentY = this.snake[i].y;
+        this.$set(this.field[nextX][nextY], 'content', 'snake');
+        this.$set(this.field[currentX][currentY], 'content', 'grass');
+        this.$set(this.snake[i], 'x', nextX);
+        this.$set(this.snake[i], 'y', nextY);
+        nextX = currentX;
+        nextY = currentY;
+      }
+    },
+    processKeypress(e)
+    {
+      if (e.key === 'r')
+        this.resetGame();
+      else if (e.key === 'ArrowLeft' && this.direction !== 'right')
+        this.$set(this, 'plannedDirection', 'left');
+      else if (e.key === 'ArrowUp' && this.direction !== 'down')
+        this.$set(this, 'plannedDirection', 'up');
+      else if (e.key === 'ArrowRight' && this.direction !== 'left')
+        this.$set(this, 'plannedDirection', 'right');
+      else if (e.key === 'ArrowDown' && this.direction !== 'up')
+        this.$set(this, 'plannedDirection', 'down');
+    },
+  },
+  mounted()
+  {
+    this.initGame();
+    window.addEventListener('keypress', this.processKeypress);
+  },
+  beforeDestroy()
+  {
+    if (this.intervalID)
+      this.stopGame();
+    window.removeEventListener('keypress', this.processKeypress);
+  },
+}
+</script>

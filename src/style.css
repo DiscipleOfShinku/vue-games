@@ -53,6 +53,50 @@
 }
 
 
+#snake-area
+{
+  position: relative;
+  left: 50%;
+  transform: translate(-50%, 0);
+  width: 450px;
+  height: 250px;
+}
+
+.tile,
+.snake-part
+{
+  position: absolute;
+  width: 10px;
+  height: 10px;
+}
+
+.wall
+{
+  background-color: #323232;
+}
+
+.grass
+{
+  background-color: #79da61;
+}
+
+.tile.snake
+{
+  background-color: #68b953;
+}
+
+.snake-part
+{
+  background-color: #6e21a4;
+}
+
+.snake-area-move
+{
+  transition: transform 0.25s;
+}
+
+
+
 #info-panel
 {
   position: relative;
@@ -76,7 +120,8 @@
   border-radius: 5px;
 }
 
-#reset-deck
+#reset-deck,
+#reset-game
 {
   background-color: #4b4b90;
   cursor: pointer;
@@ -85,6 +130,11 @@
 #victory-card
 {
   background-color: #308130;
+}
+
+#defeat-card
+{
+  background-color: #b15959;
 }
 
 #reset-deck p

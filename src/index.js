@@ -7,12 +7,14 @@ Vue.use(VueRouter);
 import Carcass from './components/Carcass.vue';
 import Home from './components/Home.vue';
 import Fifteen from './components/fifteen/Fifteen.vue';
+import Snake from './components/snake/Snake.vue';
 
 const router = new VueRouter({
   routes:
   [
     { path: '/', name: 'Home', component: Home },
     { path: '/fifteen', name: 'Fifteen', component: Fifteen },
+    { path: '/snake', name: 'Snake', component: Snake },
   ]
 });
 
