@@ -1,18 +1,33 @@
 import './style.css';
 import Vue from 'vue';
+import VueRouter from 'vue-router';
+
+Vue.use(VueRouter);
+
+import Carcass from './components/Carcass.vue';
+import Home from './components/Home.vue';
 import Fifteen from './components/fifteen/Fifteen.vue';
 
-function component()
+const router = new VueRouter({
+  routes:
+  [
+    { path: '/', name: 'Home', component: Home },
+    { path: '/fifteen', name: 'Fifteen', component: Fifteen },
+  ]
+});
+
+function appComponent()
 {
   var element = document.createElement('div');
-  element.id = 'test';
+  element.id = 'vue-app';
 
   return element;
 }
 
-document.body.appendChild(component());
+document.body.appendChild(appComponent());
 
 new Vue({
-  el: '#test',
-  render: h => h(Fifteen)
+  el: '#vue-app',
+  router,
+  render: h => h(Carcass),
 });

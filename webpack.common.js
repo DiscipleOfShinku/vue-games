@@ -12,7 +12,7 @@ module.exports =
   [
     new CleanWebpackPlugin(['dist']),
     new HtmlWebpackPlugin({
-      title: 'Production'
+      title: 'Vue games'
     })
   ],
   output:
