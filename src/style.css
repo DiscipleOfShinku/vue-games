@@ -80,6 +80,11 @@
   background-color: #79da61;
 }
 
+.apple
+{
+  background-color: red;
+}
+
 .tile.snake
 {
   background-color: #68b953;

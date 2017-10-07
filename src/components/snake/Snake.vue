@@ -41,6 +41,7 @@ export default
       field: [],
       snakeInitialLength: 3,
       snake: [],
+      apple: null,
       turnTime: 250, // in ms
       direction: 'right',
       plannedDirection: 'right',
@@ -93,13 +94,14 @@ export default
         this.stopGame();
       
       this.initField();
+      this.$set(this, 'apple', null);
       this.initSnake();
       this.putSnakeOnField();
       this.$set(this, 'isAlive', true);
       this.$set(this, 'direction', 'right');
       this.$set(this, 'plannedDirection', 'right');
       
-      var intervalID = window.setInterval(this.tryToMoveSnake, this.turnTime);
+      var intervalID = window.setInterval(this.gameTick, this.turnTime);
       this.$set(this, 'intervalID', intervalID);
     },
     stopGame()
@@ -110,6 +112,28 @@ export default
     initGame()
     {
       this.resetGame();
+    },
+    gameTick()
+    {
+      this.checkApple();
+      this.tryToMoveSnake();
+    },
+    checkApple()
+    {
+      if (this.apple === null)
+        this.putApple();
+    },
+    putApple()
+    {
+      let x = 1 + Math.floor(Math.random() * (this.fieldWidth - 1));
+      let y = 1 + Math.floor(Math.random() * (this.fieldHeight - 1));
+      if (this.field[x][y].content !== 'grass')
+        this.putApple();
+      else
+      {
+        this.$set(this.field[x][y], 'content', 'apple');
+        this.$set(this, 'apple', { 'x': x, 'y': y });
+      }
     },
     tryToMoveSnake()
     {
@@ -139,8 +163,18 @@ export default
         this.stopGame();
         this.$set(this, 'isAlive', false);
         
+      } else if (this.field[targetX][targetY].content === 'apple')
+      {
+        this.eatApple(targetX, targetY);
+        this.moveSnake(targetX, targetY);
+      
       } else
         this.moveSnake(targetX, targetY);
+    },
+    eatApple(x, y)
+    {
+      this.$set(this.field[x][y], 'content', 'grass');
+      this.$set(this, 'apple', null);
     },
     moveSnake(targetX, targetY)
     {
