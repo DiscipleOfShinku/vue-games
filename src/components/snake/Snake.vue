@@ -166,7 +166,7 @@ export default
       } else if (this.field[targetX][targetY].content === 'apple')
       {
         this.eatApple(targetX, targetY);
-        this.moveSnake(targetX, targetY);
+        this.moveSnake(targetX, targetY, true);
       
       } else
         this.moveSnake(targetX, targetY);
@@ -176,11 +176,11 @@ export default
       this.$set(this.field[x][y], 'content', 'grass');
       this.$set(this, 'apple', null);
     },
-    moveSnake(targetX, targetY)
+    moveSnake(targetX, targetY, growing = false)
     {
       var nextX = targetX;
       var nextY = targetY;
-      for (let i = 0; i < this.snakeInitialLength; i++)
+      for (let i = 0; i < this.snake.length; i++)
       {
         var currentX = this.snake[i].x;
         var currentY = this.snake[i].y;
@@ -190,6 +190,11 @@ export default
         this.$set(this.snake[i], 'y', nextY);
         nextX = currentX;
         nextY = currentY;
+      }
+      if (growing)
+      {
+        this.$set(this.field[nextX][nextY], 'content', 'snake');
+        this.snake.push({ 'x': nextX, 'y': nextY });
       }
     },
     processKeypress(e)
