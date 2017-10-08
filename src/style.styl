@@ -1,4 +1,8 @@
-.div-center
+body
+  margin 0
+
+
+.center
   margin 0
   position relative
   float left
@@ -6,6 +10,32 @@
   left 50%
   transform translate(-50%, -50%)
   user-select none
+
+
+.app
+  width 100vw
+  height 100vh
+  display grid
+  grid-template-columns 200px 1fr
+
+
+.secondary-nav
+  border-right 2px solid black
+  background-color #CBCAC2
+  padding 10px 0
+
+.secondary-nav__link
+  display block
+  padding 10px 20px
+  text-decoration none
+  color black
+
+.secondary-nav__link:focus, .secondary-nav__link:hover
+background-color #CEC1C2
+
+
+.game-area
+  background-color #CEC1C2
 
 
 #deck

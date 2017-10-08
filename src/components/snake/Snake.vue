@@ -1,5 +1,5 @@
 <template>
-    <div id="game-table">
+    <div>
       <transition-group name="snake-area" tag="div" id="snake-area">
         <div v-for="(row, x) in field"
             v-bind:key="x">
@@ -17,13 +17,13 @@
       <div id="info-panel">
         <div id="reset-game" class="info-panel-element"
             @click="resetGame">
-          <p class="div-center">RESET</p>
+          <p class="center">RESET</p>
         </div>
         <div v-if="isAlive" id="victory-card" class="info-panel-element">
-          <p class="div-center">Eat apples!</p>
+          <p class="center">Eat apples!</p>
         </div>
         <div v-else id="defeat-card" class="info-panel-element">
-          <p class="div-center">AWWWWW!</p>
+          <p class="center">AWWWWW!</p>
         </div>
       </div>
     </div>
