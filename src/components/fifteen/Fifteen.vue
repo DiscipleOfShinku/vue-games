@@ -1,20 +1,21 @@
 <template>
     <div>
-      <transition-group name="chip-pool" tag="div" id="deck">
+      <transition-group name="chip-pool" tag="div"
+          class="game-area__primary  deck">
         <div v-for="(chip, number) in chips"
-            v-if="number !== 0" class="chip"
+            v-if="number !== 0" class="btn  deck__chip"
             v-bind:key="number"
             :style="'top: ' + (chip.row * 110 + 10) + 'px; left: ' + (chip.column * 110 + 10) + 'px;'"
             @click="tryToMove(number, chip.row, chip.column)">
-          <p class="center  chip-number">{{ number }}</p>
+          <p class="center  deck__chip-number">{{ number }}</p>
         </div>
       </transition-group>
-      <div id="info-panel">
-        <div id="reset-deck" class="info-panel-element"
+      <div class="hands-area">
+        <div class="hands-area__element  btn  hands-area__reset"
             @click="resetDeck">
           <p class="center">RESET</p>
         </div>
-        <div v-if="victory" id="victory-card" class="info-panel-element">
+        <div v-if="victory" class="hands-area__element  hands-area__victory">
           <p class="center">VICTORY!</p>
         </div>
       </div>

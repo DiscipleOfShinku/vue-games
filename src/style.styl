@@ -2,14 +2,17 @@ body
   margin 0
 
 
+.btn
+  cursor pointer
+
+
 .center
   margin 0
   position relative
   float left
-  top 50%
   left 50%
+  top 50%
   transform translate(-50%, -50%)
-  user-select none
 
 
 .app
@@ -20,76 +23,85 @@ body
 
 
 .secondary-nav
-  border-right 2px solid black
-  background-color #CBCAC2
+  border-right 2px solid #6b5107
+  background-color #d2c6c2
   padding 10px 0
 
 .secondary-nav__link
-  display block
   padding 10px 20px
+  display block
+  font-size 120%
   text-decoration none
-  color black
+  color #2d2202
 
-.secondary-nav__link:focus, .secondary-nav__link:hover
-background-color #CEC1C2
+.secondary-nav__link:active, .secondary-nav__link:hover
+  background-color #c3b3b4
 
 
 .game-area
-  background-color #CEC1C2
+  display grid
+  grid-template-areas: "primary status" "secondary status"
+  justify-content center
+  align-content space-evenly
+  background-color #d5d5d5
+
+.game-area__primary
+  grid-area primary
 
 
-#deck
+
+
+.deck
   position relative
-  left 50%
-  transform translate(-50%, 0)
   width 450px
   height 450px
-  background-color #cbcac2
   border-radius 5px
   border 2px solid #6b5107
+  background-color #cbcac2
 
-.chip
+.deck__chip
   position absolute
   width 100px
   height 100px
-  background-color #6b5107
   border-radius 5px
-  cursor pointer
+  background-color #6b5107
 
-.chip-number
-  color #cbcac2
+.deck__chip-number
   font-size 400%
+  color #cbcac2
+  user-select none
 
 .chip-pool-move
   transition transform 0.25s
 
 
-#snake-area
+
+
+
+.snake-area
   position relative
-  left 50%
-  transform translate(-50%, 0)
   width 450px
   height 250px
 
-.tile,
-.snake-part
+.snake-area__tile,
+.snake-area__snake-part
   position absolute
   width 10px
   height 10px
 
-.wall
+.snake-area__wall
   background-color #323232
 
-.grass
+.snake-area__grass
   background-color #79da61
 
-.apple
+.snake-area__apple
   background-color red
 
-.tile.snake
+.snake-area__tile.snake-area__snake
   background-color #68b953
 
-.snake-part
+.snake-area__snake-part
   background-color #6e21a4
 
 .snake-area-move
@@ -97,40 +109,37 @@ background-color #CEC1C2
 
 
 
-#info-panel
+.hands-area
+  grid-area secondary
   position relative
-  left 50%
-  transform translate(-50%, 0)
   width 450px
   height 200px
-  background-color #cbcac2
   border-radius 5px
   border 2px solid #6b5107
+  background-color #cbcac2
   display flex
   flex-direction row
   justify-content space-evenly
   align-items center
 
-.info-panel-element
+.hands-area__element
   width 150px
   height 100px
   border-radius 5px
 
-#reset-deck,
-#reset-game
+.hands-area__reset
   background-color #4b4b90
-  cursor pointer
 
-#victory-card
+.hands-area__victory
   background-color #308130
 
-#defeat-card
+.hands-area__defeat
   background-color #b15959
 
-#reset-deck p
+.hands-area__reset p
   color #fff
   font-size 150%
 
-#victory-card p
+.hands-area__victory p
   color #fff
   font-size 150%

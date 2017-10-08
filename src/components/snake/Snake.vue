@@ -1,28 +1,30 @@
 <template>
     <div>
-      <transition-group name="snake-area" tag="div" id="snake-area">
+      <transition-group name="snake-area" tag="div"
+          class="game-area__primary  snake-area">
         <div v-for="(row, x) in field"
             v-bind:key="x">
           <div v-for="(tile, y) in row"
-              class="tile" v-bind:class="[tile.content]"
+              class="snake-area__tile"
+              v-bind:class="'snake-area__' + [tile.content]"
               :style="'left: ' + (x * 10) + 'px; top: ' + (y * 10) + 'px;'" >
           </div>
         </div>
         <div v-for="(part, index) in snake"
-            class="snake-part"
+            class="snake-area__snake-part"
             v-bind:key="index"
             :style="'left: ' + (part.x * 10) + 'px; top: ' + (part.y * 10) + 'px;'" >
         </div>
       </transition-group>
-      <div id="info-panel">
-        <div id="reset-game" class="info-panel-element"
+      <div class="hands-area">
+        <div class="hands-area__element  btn  hands-area__reset"
             @click="resetGame">
           <p class="center">RESET</p>
         </div>
-        <div v-if="isAlive" id="victory-card" class="info-panel-element">
+        <div v-if="isAlive" class="hands-area__element  hands-area__victory">
           <p class="center">Eat apples!</p>
         </div>
-        <div v-else id="defeat-card" class="info-panel-element">
+        <div v-else class="hands-area__element  hands-area__defeat">
           <p class="center">AWWWWW!</p>
         </div>
       </div>
