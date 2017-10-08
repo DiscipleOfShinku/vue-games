@@ -50,7 +50,16 @@ module.exports =
           'style-loader',
           'css-loader'
         ]
-      }
+      },
+      {
+        test: /\.styl$/,
+        use:
+        [
+          'style-loader',
+          'css-loader',
+          'stylus-loader'
+        ]
+      },
     ]
   }
 };
