@@ -57,7 +57,14 @@ module.exports =
         [
           'style-loader',
           'css-loader',
-          'stylus-loader'
+          {
+            loader: 'stylus-loader',
+            options:
+            {
+              use: [require('nib')()],
+              import: ['~nib/lib/nib/index.styl']
+            },
+          },
         ]
       },
     ]
