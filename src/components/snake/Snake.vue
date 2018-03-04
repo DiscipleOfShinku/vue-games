@@ -199,7 +199,7 @@ export default
         this.snake.push({ 'x': nextX, 'y': nextY });
       }
     },
-    processKeypress(e)
+    processKeydown(e)
     {
       if (e.key === 'r')
         this.resetGame();
@@ -216,13 +216,13 @@ export default
   mounted()
   {
     this.initGame();
-    window.addEventListener('keypress', this.processKeypress);
+    window.addEventListener('keydown', this.processKeydown);
   },
   beforeDestroy()
   {
     if (this.intervalID)
       this.stopGame();
-    window.removeEventListener('keypress', this.processKeypress);
+    window.removeEventListener('keydown', this.processKeydown);
   },
 }
 </script>
